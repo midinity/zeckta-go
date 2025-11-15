@@ -11,6 +11,7 @@ use App\Filament\Resources\ApiKeys\Schemas\ApiKeyInfolist;
 use App\Filament\Resources\ApiKeys\Tables\ApiKeysTable;
 use App\Models\ApiKey;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -22,10 +23,24 @@ class ApiKeyResource extends Resource
 {
     protected static ?string $model = ApiKey::class;
     // protected static ?string $navigationGroup = 'API Management';
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCodeBracket;
 
     protected static ?string $recordTitleAttribute = 'Api Keys';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
+
+    protected static ?int $navigationSort = 5;
+
+
+    protected static string|UnitEnum|null $navigationGroup = 'Devceloper';
     public static function form(Schema $schema): Schema
     {
         return ApiKeyForm::configure($schema);

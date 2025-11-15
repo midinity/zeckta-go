@@ -9,6 +9,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -39,6 +40,24 @@ class V1PanelProvider extends PanelProvider
             ->path('v1')
             ->login()
             ->profile()
+            ->brandName('Zeckta')
+            ->brandLogo(asset('images/zeckta-logo.svg'))
+            ->favicon(asset('favicon.ico'))
+            ->font('Poppins')
+            ->navigationItems([
+                NavigationItem::make('Support & Help')
+                    ->url('https://support.zeckta.com')
+                    ->label('Support & Help')
+                    ->icon('heroicon-o-question-mark-circle')
+                    ->group('Support')
+                    ->sort(10),
+                NavigationItem::make('Feedback')
+                    ->url('https://support.zeckta.com')
+                    ->label('Feedback')
+                    ->icon('heroicon-o-chat-bubble-bottom-center-text')
+                    ->group('Support')
+                    ->sort(11)
+            ])
             ->multiFactorAuthentication([
                 EmailAuthentication::make(),
                 AppAuthentication::make()
@@ -46,7 +65,7 @@ class V1PanelProvider extends PanelProvider
             ->registration()
             // ->topNavigation()
             ->colors([
-                'primary' => Color::Indigo,
+                'primary' => Color::Blue,
                 // 'gray' => Color::Slate,
                 // 'danger' => Color::Amber,
             ])
@@ -99,7 +118,10 @@ class V1PanelProvider extends PanelProvider
             ])
             ->tenantMiddleware([
                 ApplyTenantScopes::class,
-            ], isPersistent: true);
+            ], isPersistent: true)
+            ->tenantRoutePrefix('workspace')
+
+        ;
     }
 }
 
